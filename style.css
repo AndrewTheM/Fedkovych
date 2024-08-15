@@ -18,6 +18,7 @@ body {
 .radio-control {
     width: 75px;
     height: 75px;
+    margin-left: 20px;
     border: none;
 }
 
@@ -29,4 +30,35 @@ body {
 #radio-pause {
     background: url("assets/pause.png") no-repeat;
     background-size: contain;
+}
+
+.signal-bars-container {
+    height: 90px;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.signal-bar {
+    width: 1px;
+    background-color: #2134ff;
+    margin: 0 7px;
+    transition: background-color 0.3s;
+    border-radius: 3px;
+}
+
+#bar1 { height: 20%; }
+#bar2 { height: 40%; }
+#bar3 { height: 60%; }
+#bar4 { height: 80%; }
+#bar5 { height: 100%; }
+
+.signal-bar.active {
+    background-color: #fff706;
+}
+
+.signal-slider {
+    width: 190px;
+    margin-left: 10px;
 }

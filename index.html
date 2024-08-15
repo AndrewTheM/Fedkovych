@@ -48,15 +48,26 @@
                 <div class="col-5">
                     <div class="radio mt-5">
                         <div class="row">
-                            <div class="col">
-                                <button id="radio-play" class="radio-control" onclick="play()"></input>
-                                <button id="radio-pause" class="radio-control" onclick="pause()" hidden></button>
+                            <div class="col-md-auto">
+                                <div class="row">
+                                    <h3><span class="primary-text-color">Україна</span></h3>
+                                </div>
+                                <div class="row align-items-center ">
+                                    <button id="radio-play" class="radio-control" onclick="play()"></input>
+                                    <button id="radio-pause" class="radio-control" onclick="pause()" hidden></button>
+                                </div>
                             </div>
-                            <div class="col-9 ml-5">
-                                <h3><span class="primary-text-color">Україна</span></h3>
+                            <div class="col">
+                                <div class="row signal-bars-container">
+                                    <div class="signal-bar" id="bar1"></div>
+                                    <div class="signal-bar" id="bar2"></div>
+                                    <div class="signal-bar" id="bar3"></div>
+                                    <div class="signal-bar" id="bar4"></div>
+                                    <div class="signal-bar" id="bar5"></div>
+                                </div>
+                                <input type="range" min="0" max="5" value="3" class="row signal-slider" id="signalSlider">
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-7">
