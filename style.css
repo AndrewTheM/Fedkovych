@@ -15,10 +15,18 @@ body {
     height: 50px;
 }
 
-a {
-    text-decoration: none;
+.radio-control {
+    width: 75px;
+    height: 75px;
+    border: none;
 }
 
-div.flex {
-    width: 90%;
+#radio-play {
+    background: url("assets/play.png") no-repeat;
+    background-size: contain;
+}
+
+#radio-pause {
+    background: url("assets/pause.png") no-repeat;
+    background-size: contain;
 }
