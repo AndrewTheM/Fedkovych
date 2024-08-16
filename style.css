@@ -41,7 +41,7 @@ body {
 }
 
 .signal-bar {
-    width: 1px;
+    width: 12px;
     background-color: #2134ff;
     margin: 0 7px;
     transition: background-color 0.3s;
@@ -61,4 +61,11 @@ body {
 .signal-slider {
     width: 190px;
     margin-left: 10px;
+}
+
+.video-box{
+    margin-top: 20px;
+    width: 100%;
+    height: 300px;
+    background-color: #ffffff;
 }
