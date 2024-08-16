@@ -2,6 +2,12 @@ body {
     background: rgb(87, 145, 227);
     background-size: contain;
     height: calc(100vh - 40px);
+    font-family: 'KyivType';
+}
+
+@font-face {
+    font-family: 'KyivType';
+    src: url('assets/KyivTypeSerif-Bold.ttf');
 }
 
 .container {
@@ -82,9 +88,10 @@ h3 {
     background-color: #f9db45;
 }
 
-.signal-slider {
+#signal-slider {
     width: 90px;
     margin-left: 10px;
+    accent-color: #f9db45;
 }
 
 .volume-control {

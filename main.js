@@ -1,7 +1,7 @@
 const playButton = document.getElementById("radio-play");
 const pauseButton = document.getElementById("radio-pause");
 
-const signalSlider = document.getElementById('signalSlider');
+const signalSlider = document.getElementById('signal-slider');
 const signalBars = document.querySelectorAll('.signal-bar');
 
 function updateSignalBars(level) {
