@@ -8,7 +8,7 @@
         <title>Fedkovych.live</title>
     </head>
     <body>
-        <div class="container mx-6">
+        <div class="container">
             <div class="row">
                 <div class="col-lg-7">
                     <h1>
@@ -45,21 +45,31 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-5">
+                <div class="col-lg">
                     <div class="radio mt-5">
-                        <div class="row">
-                            <div class="col-lg">
-                                <button id="radio-play" class="radio-control" onclick="play()"></input>
-                                <button id="radio-pause" class="radio-control" onclick="pause()" hidden></button>
-                            </div>
-                            <div class="col-lg-9 ml-5">
-                                <h3 class="primary-text-color">Україна</h3>
-                            </div>
+                        <div>
+                            <button id="radio-play" class="radio-control" onclick="play()"></input>
+                            <button id="radio-pause" class="radio-control" onclick="pause()" hidden></button>
                         </div>
-
+                        <div class="volume-control">
+                            <div class="signal-bars-container">
+                                <div class="signal-bar" id="bar1"></div>
+                                <div class="signal-bar" id="bar2"></div>
+                                <div class="signal-bar" id="bar3"></div>
+                                <div class="signal-bar" id="bar4"></div>
+                                <div class="signal-bar" id="bar5"></div>
+                            </div>
+                            <input type="range" min="0" max="5" value="3" class="signal-slider" id="signalSlider" />
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                      <h3 class="primary-text-color">Зараз грає:</h3>
+                    </div>
+                    <div class="row">
+                        <div class="video-box"></div>
                     </div>
                 </div>
-                <div class="col-lg-7 d-flex justify-content-end">
+                <div class="col-lg d-flex justify-content-end align-items-end">
                     <img class="art-picture img-fluid" src="assets/fedkovych.png" />
                 </div>
             </div>
