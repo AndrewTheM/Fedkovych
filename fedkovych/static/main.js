@@ -3,6 +3,7 @@ const pauseButton = document.getElementById("radio-pause");
 
 const signalSlider = document.getElementById('signal-slider');
 const signalBars = document.querySelectorAll('.signal-bar');
+const audioPlayer = document.getElementById('radio-player');
 
 function updateSignalBars(level) {
     signalBars.forEach((bar, index) => {
@@ -15,6 +16,8 @@ function updateSignalBars(level) {
 }
 
 signalSlider.addEventListener('input', function() {
+    const volumeLevel = signalSlider.value / 5;
+    audioPlayer.volume = volumeLevel;
     updateSignalBars(signalSlider.value);
 });
 
@@ -22,11 +25,18 @@ signalSlider.addEventListener('input', function() {
 updateSignalBars(signalSlider.value);   
 
 function play() {
-    playButton.hidden = true;
-    pauseButton.hidden = false;
+    console.log("Play button clicked");  // Debugging line
+    audioPlayer.play().then(() => {
+        playButton.hidden = true;
+        pauseButton.hidden = false;
+    }).catch(error => {
+        console.error("Error playing audio: ", error);
+    });
 }
 
 function pause() {
+    console.log("Pause button clicked");  // Debugging line
+    audioPlayer.pause();
     playButton.hidden = false;
     pauseButton.hidden = true;
 }

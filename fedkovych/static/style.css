@@ -115,7 +115,12 @@ p {
     margin: 20px auto;
     width: 320px;
     height: 180px;
-    background-color: black;
+}
+
+.c-video {
+    width: 320px;
+    height: 180px;
+    object-fit: cover;
 }
 
 .art-picture {
@@ -221,8 +226,8 @@ p {
     }
 
     .video-box {
-        width: 580px;
-        height: 315px;
+        width: 576px;
+        height: 324px;
         margin: 0;
         margin-top: 20px;
     }
