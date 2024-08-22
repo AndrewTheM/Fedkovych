@@ -18,6 +18,8 @@ from django.conf import settings
 class Video(models.Model):
     title = models.CharField(max_length=255)
     mp4_file = models.FileField(upload_to='music/')
+    is_converted = models.BooleanField(default=False)
+    duration_seconds = models.IntegerField(null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
