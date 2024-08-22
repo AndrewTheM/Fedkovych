@@ -1,22 +1,23 @@
 import asyncio
+import ffmpeg
 import os
 import random
-import subprocess
 
 
 base_directory = 'music/'
 media_queue_file = 'media_queue.txt'
+rtmp_url = 'rtmp://localhost:1935/stream/radio'
 
 
 async def play_music():
     while True:
         await create_random_media_queue()
-        rtmp_url = 'rtmp://localhost:1935/stream/radio'
-        music_command = [
-            'ffmpeg', '-re', '-f', 'concat', '-i', base_directory + 'media_queue.txt',
-            '-c:v', 'libx264', '-c:a', 'aac', '-ar', '44100', '-ac', '2', '-f', 'flv', rtmp_url
-        ]
-        subprocess.run(music_command)
+        (
+            ffmpeg
+            .input(base_directory + media_queue_file, f='concat', re=None)
+            .output(rtmp_url, vcodec='libx264', acodec='aac', ar=44100, ac=2, format='flv')
+            .run()
+        )
 
 async def create_random_media_queue():
     dir = f'{os.getcwd()}/{base_directory}'
