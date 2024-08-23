@@ -11,6 +11,7 @@ from .models import Video #,Song
 
 @admin.register(Video)
 class SongAdmin(admin.ModelAdmin):
+    exclude = ['is_converted', 'duration_seconds']
     list_display = ['title', 'date_added']
     search_fields = ['title']
     date_hierarchy = 'date_added'
