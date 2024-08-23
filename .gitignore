@@ -3,3 +3,5 @@ node_modules/
 __pycache__/
 
 media_queue.txt
+radio_schedule.txt
+music/
