@@ -115,12 +115,7 @@ p {
     margin: 20px auto;
     width: 320px;
     height: 180px;
-}
-
-.c-video {
-    width: 320px;
-    height: 180px;
-    object-fit: cover;
+    border: 1px solid #811414;
 }
 
 .art-picture {
@@ -129,7 +124,11 @@ p {
 }
 
 .social-media {
-    margin: 20px 0 0;
+    margin: 20px 0 10px;
+}
+
+.vjs-modal-dialog-content {
+    display: none;
 }
 
 @media (min-width: 576px) {
@@ -196,6 +195,10 @@ p {
     .video-box {
         margin: 0;
         margin-top: 20px;
+    }
+
+    .social-media {
+        margin: 0;
     }
 
     .radio {

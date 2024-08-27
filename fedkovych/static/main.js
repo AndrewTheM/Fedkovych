@@ -1,11 +1,22 @@
 const playButton = document.getElementById('radio-play');
 const pauseButton = document.getElementById('radio-pause');
 const currentTrack = document.getElementById('current-track');
-const audioPlayer = document.getElementById('radio-player');
+const radioPlayer = document.getElementById('radio-player');
+const videoPlayer = document.getElementById('video-player');
 const signalSlider = document.getElementById('signal-slider');
 const signalBars = document.querySelectorAll('.signal-bar');
 
 const delay = 15;
+
+window.addEventListener('load', updateCurrentTrack);
+signalSlider.addEventListener('input', updateVolume);
+playButton.addEventListener('click', playRadio);
+pauseButton.addEventListener('click', pauseRadio);
+videoPlayer.addEventListener('play', pauseRadio);
+
+// Initialize volume slider from local storage
+signalSlider.value = parseInt(localStorage.getItem('volume'));
+updateSignalBars(signalSlider.value);
 
 function updateCurrentTrack() {
     fetch('/api/radio_schedule')
@@ -22,9 +33,9 @@ function updateCurrentTrack() {
 
             const [time, ...rest] = schedule[0].split(' ');
             const trackTitle = rest.join(' ');
-            const time_now = Math.floor(Date.now() / 1000);
+            const timeNow = Math.floor(Date.now() / 1000);
 
-            if (time_now - parseInt(time) < delay) {
+            if (timeNow - parseInt(time) < delay) {
                 currentTrack.innerHTML = trackTitle;
             } else {
                 schedule.shift();
@@ -34,7 +45,11 @@ function updateCurrentTrack() {
     .catch(error => console.error('Error fetching data:', error));
 }
 
-window.onload = updateCurrentTrack;
+function updateVolume() {
+    radioPlayer.volume = signalSlider.value / 5;
+    localStorage.setItem('volume', signalSlider.value.toString());
+    updateSignalBars(signalSlider.value);
+}
 
 function updateSignalBars(level) {
     signalBars.forEach((bar, index) => {
@@ -46,28 +61,15 @@ function updateSignalBars(level) {
     });
 }
 
-signalSlider.addEventListener('input', function() {
-    const volumeLevel = signalSlider.value / 5;
-    audioPlayer.volume = volumeLevel;
-    updateSignalBars(signalSlider.value);
-});
-
-// Initialize with default value
-updateSignalBars(signalSlider.value);   
-
-function play() {
-    console.log("Play button clicked");  // Debugging line
-    audioPlayer.play().then(() => {
-        playButton.hidden = true;
-        pauseButton.hidden = false;
-    }).catch(error => {
-        console.error("Error playing audio: ", error);
-    });
+function playRadio() {
+    radioPlayer.play();
+    videoPlayer.pause();
+    playButton.hidden = true;
+    pauseButton.hidden = false;
 }
 
-function pause() {
-    console.log("Pause button clicked");  // Debugging line
-    audioPlayer.pause();
+function pauseRadio() {
+    radioPlayer.pause();
     playButton.hidden = false;
     pauseButton.hidden = true;
 }
