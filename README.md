@@ -43,3 +43,6 @@ http://localhost:8080/live/radio.m3u8
 ```
 http://localhost:8080/player.html?url=http://localhost:8080/live/radio.m3u8
 ```
+
+### Завантаження відео
+http://localhost:8000/admin/radio/video/

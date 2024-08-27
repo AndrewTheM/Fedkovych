@@ -16,11 +16,11 @@ from django.conf import settings
 #         ordering = ['-date_added']
 
 class Video(models.Model):
-    title = models.CharField(max_length=255, blank=True)
-    mp4_file = models.FileField(upload_to='music/')
+    title = models.CharField(max_length=255, blank=True, verbose_name='Назва пісні')
+    mp4_file = models.FileField(upload_to='music/', verbose_name='Файл')
     is_converted = models.BooleanField(default=False)
     duration_seconds = models.IntegerField(null=True)
-    date_added = models.DateTimeField(auto_now_add=True)
+    date_added = models.DateTimeField(auto_now_add=True,verbose_name='Дата додавання')
 
     def save(self, *args, **kwargs):
         if not self.title and self.mp4_file:
