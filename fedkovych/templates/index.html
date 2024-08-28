@@ -9,7 +9,7 @@
         <link href="{% static 'style.css' %}" rel="stylesheet" />
         <title>Fedkovych.live</title>
     </head>
-    <body>
+    <body onload="drawSlider()">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7 p-0">
@@ -49,19 +49,12 @@
             <div class="row">
                 <div class="col-lg-7">
                     <div class="radio mt-3">
-                        <div>
+                        <div id="centered">
                             <button id="radio-play" class="radio-control"></button>
                             <button id="radio-pause" class="radio-control" hidden></button>
                         </div>
                         <div class="volume-control">
-                            <div class="signal-bars-container">
-                                <div class="signal-bar" id="bar1"></div>
-                                <div class="signal-bar" id="bar2"></div>
-                                <div class="signal-bar" id="bar3"></div>
-                                <div class="signal-bar" id="bar4"></div>
-                                <div class="signal-bar" id="bar5"></div>
-                            </div>
-                            <input type="range" min="0" max="5" value="5" id="signal-slider" />
+                            <canvas id="volumeSlider" ></canvas>
                         </div>
                         <video id="radio-player" data-setup='{}' hidden>
                             <source src="http://localhost:8080/live/radio.m3u8" type="application/x-mpegURL" />
@@ -97,5 +90,101 @@
         <script src="{% static 'main.js'%}"></script>
         <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
         <script src="https://unpkg.com/videojs-contribhls/dist/videojs-contrib-hls.js"></script>
+        <script>
+            const playButton = document.getElementById('radio-play');
+            const pauseButton = document.getElementById('radio-pause');
+            const radioPlayer = document.getElementById('radio-player');
+            const videoPlayer = document.getElementById('video-player');
+
+            const canvas = document.getElementById('volumeSlider');
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 60;
+            let volume = 50;
+            let isDragging = false;
+
+            function playRadio() {
+                radioPlayer.play();
+                videoPlayer.pause();
+                playButton.hidden = true;
+                pauseButton.hidden = false;
+            }
+
+            function pauseRadio() {
+                radioPlayer.pause();
+                playButton.hidden = false;
+                pauseButton.hidden = true;
+            }
+
+            playButton.addEventListener('click', playRadio);
+            pauseButton.addEventListener('click', pauseRadio);
+            videoPlayer.addEventListener('play', pauseRadio);
+
+            // Draw the slider
+            function drawSlider() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+                // Outer circle (slider track)
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                ctx.lineWidth = 15;
+                ctx.strokeStyle = '#ddd';
+                ctx.stroke();
+    
+                // Filled portion of the slider
+                const endAngle = (volume / 100) * Math.PI * 2;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, -Math.PI / 2, endAngle - Math.PI / 2);
+                ctx.lineWidth = 15;
+                ctx.strokeStyle = '#ff6f61';
+                ctx.stroke();
+            }
+    
+            // Update the volume based on mouse position
+            function updateVolume(x, y) {
+                const angle = Math.atan2(y - centerY, x - centerX) + Math.PI / 2;
+                if (angle < 0) {
+                    volume = ((angle + Math.PI * 2) / (Math.PI * 2)) * 100;
+                } else {
+                    volume = (angle / (Math.PI * 2)) * 100;
+                }
+                drawSlider();
+                radioPlayer.volume = volume;
+            }
+    
+            // Handle mouse down event
+            canvas.addEventListener('mousedown', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+    
+                isDragging = true;
+                updateVolume(x, y);
+            });
+    
+            // Handle mouse move event
+            canvas.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    updateVolume(x, y);
+                }
+            });
+    
+            // Handle mouse up event
+            canvas.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+    
+            // Handle mouse leave event to stop dragging
+            canvas.addEventListener('mouseleave', () => {
+                isDragging = false;
+            });
+    
+            // Initial draw
+            
+        </script>
     </body>
 </html>

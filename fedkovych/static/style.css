@@ -60,9 +60,19 @@ p {
     display: block;
 }
 
+#centered{
+    position: absolute;
+}
+
+.volume-control {
+    top: 50%;
+    left: 50%;
+}
+
 .radio {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 #radio-play {
@@ -107,10 +117,6 @@ p {
     accent-color: #f9db45;
 }
 
-.volume-control {
-    margin-left: 30px;
-}
-
 .video-box {
     margin: 20px auto;
     width: 320px;
@@ -153,10 +159,6 @@ p {
     .art-picture {
         width: 300px;
         margin: 0;
-    }
-
-    .radio-control {
-        margin-bottom: 20px;
     }
 
     .video-box {
