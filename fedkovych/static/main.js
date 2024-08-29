@@ -1,8 +1,29 @@
 const currentTrack = document.getElementById('current-track');
+const playButton = document.getElementById('radio-play');
+const pauseButton = document.getElementById('radio-pause');
+const radioPlayer = document.getElementById('radio-player');
+const videoPlayer = document.getElementById('video-player');
 
 const delay = 15;
 
 window.addEventListener('load', updateCurrentTrack);
+playButton.addEventListener('click', playRadio);
+pauseButton.addEventListener('click', pauseRadio);
+videoPlayer.addEventListener('play', pauseRadio);
+
+
+function playRadio() {
+    radioPlayer.play();
+    videoPlayer.pause();
+    playButton.hidden = true;
+    pauseButton.hidden = false;
+}
+
+function pauseRadio() {
+    radioPlayer.pause();
+    playButton.hidden = false;
+    pauseButton.hidden = true;
+}
 
 function updateCurrentTrack() {
     fetch('/api/radio_schedule')
