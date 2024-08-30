@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
+import os
 import os.path
+from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,13 +26,20 @@ MEDIA_URL = '/music/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nw^0!_7sw!h4bhz!$w%5q-9la3rls6k@&k7xvoiq=4%x5fx0l*'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# Remove in production
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Add in production
+
+#DEBUG = False
+#SECURE_SSL_REDIRECT = True
+#CSRF_COOKIE_SECURE = True
+#SESSION_COOKIE_SECURE = True
+#SECURE_HSTS_SECONDS = 
+
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[]::1]']
 
 
 # Application definition
@@ -82,11 +93,11 @@ WSGI_APPLICATION = 'fedkovych.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'radio-db',
-        'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '5433',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_USER_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'SSLMODE': 'require',
     }
 }
 

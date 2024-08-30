@@ -5,3 +5,6 @@ __pycache__/
 media_queue.txt
 radio_schedule.txt
 music/
+
+.env
+staticfiles/

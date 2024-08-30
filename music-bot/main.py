@@ -4,19 +4,20 @@ import os
 import psycopg2
 import random
 import time as t
+from dotenv import load_dotenv
 
+load_dotenv('../fedkovych/.env')
 
 base_directory = 'music/'
 media_queue_file = 'media_queue.txt'
 radio_schedule_file = 'radio_schedule.txt'
-rtmp_url = 'rtmp://localhost:1935/stream/radio'
+rtmp_url = 'rtmp://34.116.189.111:1935/stream/radio'
 
 db_config = {
-    'dbname': 'radio-db',
-    'user': 'postgres',
-    'password': 'root',
-    'host': 'localhost',
-    'port': '5433'
+    'dbname': os.getenv('DATABASE_NAME'),
+    'user': os.getenv('DATABASE_USER'),
+    'password': os.getenv('DATABASE_USER_PASSWORD'),
+    'host': os.getenv('DATABASE_HOST'),
 }
 
 
@@ -75,7 +76,7 @@ def convert_video(file: str):
     (
         ffmpeg
         .input(file)
-        .output(temp_file_name, vcodec='libx264', vf='fps=30', video_track_timescale=60000)
+        .output(temp_file_name, vcodec='libx264', vf='fps=30, scale=720:480', video_track_timescale=90000, acodec='aac', ar=44100, ac=2, ab='128k')
         .run()
     )
     os.remove(file)
