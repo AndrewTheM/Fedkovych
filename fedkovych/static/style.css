@@ -67,12 +67,12 @@ p {
 }
 
 #radio-play {
-    background: url("assets/play.png") no-repeat;
+    background: url('assets/play.png') no-repeat;
     background-size: contain;
 }
 
 #radio-pause {
-    background: url("assets/pause.png") no-repeat;
+    background: url('assets/pause.png') no-repeat;
     background-size: contain;
 }
 

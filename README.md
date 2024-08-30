@@ -5,7 +5,7 @@ docker run -it -p 1935:1935 -p 8080:80 --rm alfg/nginx-rtmp
 
 ### Закинути відео потік через FFmpeg
 ```
-ffmpeg -re -i $VIDEO_PATH -c:v libx264 -c:a aac -ar 44100 -ac 1 -f flv rtmp://localhost:1935/stream/radio
+ffmpeg -re -i $VIDEO_PATH -c:v libx264 -c:a aac -ar 44100 -ac 2 -f flv rtmp://localhost:1935/stream/radio
 ```
 
 - -re specifies that input will be read at its native framerate.
@@ -29,9 +29,9 @@ file video4x.mp4
 file video5x.mp4
 ```
 
-### Обробка відео для нормальної роботи ffconcat
+### Обробка відео для нормалізації і стиснення
 ```
-ffmpeg -i video1.mp4 -vcodec libx264 -vf fps=30 -video_track_timescale 60000 video1x.mp4
+ffmpeg -i video1.mp4 -vcodec libx264 -vf "fps=30, scale=720:480" -video_track_timescale 90000 -c:a aac -ar 44100 -ac 2 video1x.mp4
 ```
 
 ### HLS-стрім (для програвання в HLS плеєрі)
