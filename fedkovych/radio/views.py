@@ -1,14 +1,15 @@
 import os
-from pathlib import Path
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
+from google.cloud import storage
 
 def stream_player(request):
     return render(request, 'index.html')
 
 def radio_schedule(request):
-    schedule_file = os.path.join(os.path.dirname(os.getcwd()), 'music-bot', 'radio_schedule.txt')
-    with open(schedule_file, 'r', encoding='utf-8') as file:
-        lines = file.readlines()
-    lines = [line.rstrip() for line in lines]
-    return JsonResponse({'schedule': lines})
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(os.getenv('GS_BUCKET_NAME'))
+    blob = bucket.blob('radio_schedule.txt')
+    schedule = blob.download_as_text().split(os.linesep)
+    schedule.pop()
+    return JsonResponse({'schedule': schedule})

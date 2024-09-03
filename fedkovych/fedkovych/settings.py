@@ -29,17 +29,12 @@ MEDIA_URL = '/music/'
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# Remove in production
-#DEBUG = True
-
-# Add in production
-
 DEBUG = False
 SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[]::1]', 'radio-fedkovych.lm.r.appspot.com']
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[]::1]', 'radio-fedkovych.lm.r.appspot.com', 'fedkovych.pp.ua']
 
 
 # Application definition
