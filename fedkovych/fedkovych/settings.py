@@ -106,7 +106,6 @@ DATABASES = {
         'USER': os.getenv('DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_USER_PASSWORD'),
         'HOST': os.getenv('DATABASE_HOST'),
-        'SSLMODE': 'require',
     }
 }
 
