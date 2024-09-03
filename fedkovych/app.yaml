@@ -2,9 +2,11 @@
 
 runtime: python312
 env: standard
-entrypoint: gunicorn -b :$PORT core.wsgi:application
+entrypoint: gunicorn -b :$PORT fedkovych.wsgi:application
 
 handlers:
+- url: /static
+  static_dir: staticfiles/
 - url: /.*
   script: auto
 

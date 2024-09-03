@@ -11,7 +11,7 @@ load_dotenv('../fedkovych/.env')
 base_directory = 'music/'
 media_queue_file = 'media_queue.txt'
 radio_schedule_file = 'radio_schedule.txt'
-rtmp_url = 'rtmp://34.116.189.111:1935/stream/radio'
+rtmp_url = 'rtmp://34.116.155.107:1935/stream/radio'
 
 db_config = {
     'dbname': os.getenv('DATABASE_NAME'),

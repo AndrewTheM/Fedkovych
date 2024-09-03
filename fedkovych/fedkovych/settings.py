@@ -14,6 +14,7 @@ import os
 import os.path
 from pathlib import Path
 from dotenv import load_dotenv
+from google.oauth2 import service_account
 
 load_dotenv()
 
@@ -29,17 +30,16 @@ MEDIA_URL = '/music/'
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # Remove in production
-DEBUG = True
+#DEBUG = True
 
 # Add in production
 
-#DEBUG = False
-#SECURE_SSL_REDIRECT = True
-#CSRF_COOKIE_SECURE = True
-#SESSION_COOKIE_SECURE = True
-#SECURE_HSTS_SECONDS = 
+DEBUG = False
+SECURE_SSL_REDIRECT = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[]::1]']
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[]::1]', 'radio-fedkovych.lm.r.appspot.com']
 
 
 # Application definition
@@ -85,6 +85,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'fedkovych.wsgi.application'
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'storages.backends.gcloud.GoogleCloudStorage'
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    }
+}
 
 
 # Database
@@ -137,7 +146,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATIC_ROOT= os.path.join(BASE_DIR ,'staticfiles')
 STATICFILES_DIRS = ( os.path.join(BASE_DIR,'static'),)
 
@@ -145,3 +153,9 @@ STATICFILES_DIRS = ( os.path.join(BASE_DIR,'static'),)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+GS_BUCKET_NAME = os.getenv('GS_BUCKET_NAME')
+
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    os.path.join(BASE_DIR, 'gcp_credentials.json')
+)

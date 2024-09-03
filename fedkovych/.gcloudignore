@@ -2,9 +2,6 @@
 
 .gcloudignore
 
-# Ignore local .env file
-.env
-
 # If you would like to upload your .git directory, .gitignore file, or files
 # from your .gitignore file, remove the corresponding line
 # below:
@@ -13,10 +10,6 @@
 
 # Python pycache:
 __pycache__/
-
-# Ignore collected static and media files
-mediafiles/
-staticfiles/
 
 # Ignore the local DB
 db.sqlite3

@@ -8,3 +8,5 @@ music/
 
 .env
 staticfiles/
+
+gcp_credentials.json
