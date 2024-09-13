@@ -46,3 +46,10 @@ http://localhost:8080/player.html?url=http://localhost:8080/live/radio.m3u8
 
 ### Завантаження відео
 http://localhost:8000/admin/radio/video/
+https://fedkovych.pp.ua/admin/radio/video/
+
+### Сертифікати
+```
+docker exec -it $(docker ps -q) /bin/sh
+certbot renew
+```

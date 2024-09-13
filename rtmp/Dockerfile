@@ -82,7 +82,9 @@ RUN apk add --no-cache \
   rtmpdump \
   x264-dev \
   x265-dev \
-  ffmpeg
+  ffmpeg \
+  certbot \
+  certbot-nginx
 
 COPY --from=build-nginx /usr/local/nginx /usr/local/nginx
 COPY --from=build-nginx /etc/nginx /etc/nginx
