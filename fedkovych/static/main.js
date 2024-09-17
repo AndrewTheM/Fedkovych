@@ -1,41 +1,52 @@
 const playButton = document.getElementById('radio-play');
 const pauseButton = document.getElementById('radio-pause');
-const currentTrack = document.getElementById('current-track');
+const currentTrackLabel = document.getElementById('current-track');
 const radioPlayer = document.getElementById('radio-player');
 const videoPlayer = document.getElementById('video-player');
 
-const delay = 15;
+let currentSchedule;
 
-window.addEventListener('load', updateCurrentTrack);
+window.addEventListener('DOMContentLoaded', loadSchedule);
 playButton.addEventListener('click', playRadio);
 pauseButton.addEventListener('click', pauseRadio);
 videoPlayer.addEventListener('play', pauseRadio);
 
-function updateCurrentTrack() {
+function loadSchedule() {
     fetch('/api/radio_schedule')
     .then(response => response.json())
     .then(data => {
-        schedule = data['schedule'];
+        const schedule = data['schedule'];
+        currentSchedule = schedule.map(item => {
+            const [time, ...rest] = item.split(' ');
+            return { timestamp: parseInt(time), track: rest.join(' ') };
+        });
         const timerId = setInterval(() => {
-            if (schedule.length === 0) {
+            const currentTrack = getCurrentTrack();
+            if (!currentTrack) {
                 clearInterval(timerId);
-                currentTrack.innerHTML = '';
-                updateCurrentTrack();
+                currentTrackLabel.innerHTML = '';
+                loadSchedule();
                 return;
             }
-
-            const [time, ...rest] = schedule[0].split(' ');
-            const trackTitle = rest.join(' ');
-            const timeNow = Math.floor(Date.now() / 1000);
-
-            if (timeNow - parseInt(time) < delay) {
-                currentTrack.innerHTML = trackTitle;
-            } else {
-                schedule.shift();
+            if (currentTrackLabel.innerHTML !== currentTrack) {
+                currentTrackLabel.innerHTML = currentTrack;
             }
         }, 1000);
     })
-    .catch(error => console.error('Error fetching data:', error));
+    .catch(error => console.error('Error fetching schedule:', error));
+}
+
+function getCurrentTrack() {
+    let currentTrack;
+    const timeNow = Math.floor(Date.now() / 1000);
+    for (let i = 0; i < currentSchedule.length; i++) {
+        const { timestamp, track } = currentSchedule[i];
+        if (timeNow < timestamp) {
+            currentTrack = track;
+            break;
+        }
+    }
+    return currentTrack;
 }
 
 function playRadio() {

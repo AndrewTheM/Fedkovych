@@ -31,16 +31,22 @@ async def create_random_media_queue():
     media_info = [row for row in cur.fetchall()]
     cur.close()
     conn.close()
+    
     random.shuffle(media_info)
+    
+    tracks = []
+    for i in range(0, 12):
+        tracks.extend(media_info)
     
     with open(media_queue_file, 'w', encoding='utf-8') as file:
         file.write('ffconcat version 1.0\n')
-        for info in media_info:
+        for info in tracks:
             file.write(f'file {info[1]}\n')
     
-    cur_time = int(t.time())
+    delay = 15
+    cur_time = int(t.time()) + delay
     with open(radio_schedule_file, 'w', encoding='utf-8') as file:
-        for info in media_info:
+        for info in tracks:
             cur_time += int(info[2])
             file.write(f'{cur_time} {info[0]}\n')
     
@@ -49,6 +55,8 @@ async def create_random_media_queue():
 async def process_files():
     with open(f'{os.getcwd()}/{radio_schedule_file}', 'w') as file:
         pass
+    
+    gcloud_upload(radio_schedule_file)
     
     conn = psycopg2.connect(**db_config)
     cur = conn.cursor()
